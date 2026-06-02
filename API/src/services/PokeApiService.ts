@@ -4,7 +4,7 @@ import { mensagemErro, mensagemOk } from "../utils/textFormatters";
 const URL_BASE = "https://pokeapi.co/api/v2/pokemon";
 
 export async function buscarPokemon(nomeOuId: string): Promise<PokemonResumo | null> {
-  const url = `${URL_BASE}/${nomeOuId}`;
+  const url = `${URL_BASE}/${nomeOuId.toLowerCase().trim()}`;
 
   try {
     const resposta = await fetch(url);
@@ -16,7 +16,6 @@ export async function buscarPokemon(nomeOuId: string): Promise<PokemonResumo | n
 
     const dados = await resposta.json() as PokemonApiResponse;
 
-    // Usa map para transformar o array de tipos da API em um array de strings
     const tipos: string[] = dados.types.map((item) => item.type.name);
 
     const pokemon: PokemonResumo = {
